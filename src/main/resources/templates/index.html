@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- <meta charset="ISO-8859-1" /> -->
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Index Monitora Web Log</title>
+
+<link href="../css/bootstrap.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/local.css" />
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+          <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+         
+                <ul class="nav navbar-nav  navbar-user">
+                    
+                    <li class="dropdown user-dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> User<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                            <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+
+                        </ul>
+                    </li>
+                   
+                </ul>
+            </div>
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Dashboard <small>Statistics and more</small></h1>
+
+                </div>
+            </div>
+            
+<!--             <div class="row"> -->
+<!--             	<div class="col-lg-8"> -->
+<!--             	<div class="alert alert-dismissable alert-warning"> -->
+<!--                         <button data-dismiss="alert" class="close" type="button">&times;</button> -->
+<!--                         	Novas excecoes push notification message ...  -->
+<!--                  </div> -->
+<!--                  </div> -->
+<!--             </div> -->
+
+			<div class="row">
+				<div class="col-lg-4">
+				<div class="panel panel-primary">
+				<div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button"
+						id="dropdownMenuButton" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">Dropdown	button</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="#">Semanal</a>
+						<a class="dropdown-item" href="#">Mensal</a>
+					</div>
+				</div>
+				</div>
+				</div>
+			</div>
+
+
+			<div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Erros mais Recorentes</h3>
+                        </div>
+                        <div class="panel-body">
+                            <canvas id="exceptionChart" class="chartjs"> </canvas>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="col-md-6">
+					<div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Classes com mais Ocorrencias</h3>
+                        </div>
+                        <div class="panel-body">
+                            <canvas id="classesChart" class="chartjs" ></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="row">
+               <div class="col-md-12">
+               		<div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Ocorrencias por Periodo</h3>
+                        </div>
+                        <div class="panel-body">
+                            <canvas id="errosPeriodoChart" class="chartjs" ></canvas>
+                        </div>
+                    </div>
+               </div>
+            </div>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/Chart.js"></script>
+<script type="text/javascript" src="../js/graficos.js"></script>
+
+</body>
+
+
+</html>

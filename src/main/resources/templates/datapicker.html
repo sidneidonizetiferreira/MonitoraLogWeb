@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/local.css" />
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+
+<!-- calendar -->
+<link rel="stylesheet" type="text/css" href="../css/datepicker.css" />
+<script type="text/javascript" src="../js/bootstrap-datepicker.js"></script>
+
+
+
+</head>
+<body>
+<div id="wrapper">
+<div id="page-wrapper">
+
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form action="/datapicker/datas"  method="post">
+    	
+					<div class="input-group input-daterange">
+						<input type="text" class="form-control datepicker"	name="datainicial" />
+						<div class="input-group-addon">to</div>
+						<input type="text" class="form-control datepicker" name="datafinal"	/>
+					</div>
+
+
+					<div class="input-group">
+						<button type="submit" value="Submit" class="btn btn-primary">Submit</button>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+</div>
+</body>
+
+<script type="text/javascript">
+	$(".datepicker").datepicker({
+	    language: "pt-BR",
+	    autoclose: true,
+	    format: 'dd/mm/yyyy',
+	    todayHighlight: true,
+	    constrainInput: false 
+	})
+	
+</script>
+
+</html>

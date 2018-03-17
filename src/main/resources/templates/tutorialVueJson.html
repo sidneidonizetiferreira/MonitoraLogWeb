@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="../css/vue_css.css" />
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+
+<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/local.css" />
+
+</head>
+<body>
+	<div id="app">
+      
+      <div class="columns medium-2" v-for="row in registros">
+      <div>
+      	{{ row.idOcorrencia }} - {{ row.classeErro }} - {{ row.tipoExcessao }}
+      </div>
+     
+      </div>
+      
+    </div>
+</body>
+
+<!-- include vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.9.3/vue-resource.min.js"></script>
+    
+    <!-- axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
+
+
+<script >
+ 
+new Vue({
+    el: '#app',
+    data: {
+        registros: []
+    },
+    created() {
+			this.$http.get('/chart/carregamentoInicialTabela').then(response => {
+	            this.registros = response.json() ;
+	        	console.log(typeof response);    
+			})
+			
+    }
+  
+});
+</script>
+
+
+
+
+
+</html>

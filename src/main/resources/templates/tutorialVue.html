@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="../css/vue_css.css" />
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+
+<link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/local.css" />
+
+<!-- calendar vue -->
+
+</head>
+<body>
+	<div id="wrapper">
+	
+
+	<div id="app">
+		<v-client-table :columns="columns" :data="dadosTabela" :options="options" >
+		<a slot="uri" slot-scope="props" target="_blank" :href="props.row.stackTrace"	class="glyphicon glyphicon-eye-open"></a>
+
+		<div slot="child_row" slot-scope="props">
+			Id: {{props.row.idOcorrencia}} Erro : {{props.row.classeErro}} - {{props.row.stackTrace}}
+		</div>
+
+		</v-client-table>
+	</div>
+
+</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.9.3/vue-resource.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-tables-2@1.3.61/dist/vue-tables-2.min.js"></script>
+
+
+
+<script>
+
+Vue.use(VueTables.ClientTable);
+
+new Vue({
+  el: "#app",
+ 	    
+  data: {
+	registros: [], 
+    columns: ['idOcorrencia','classeErro' , 'stackTrace'],
+    dadosTabela: fetchData(),
+           
+    options: {
+      headings: {
+        idOcorrencia: 'Ocorrencia',
+        dataOcorrencia: 'Data Ocorrencia',
+        sistema: 'Sistema',
+        ipserver: 'Ip Servidor',
+        pacoteErro: 'Pacote com Erro',
+        classeErro: 'Classe Erro',
+        metodoErro: 'Metodo com Erro',
+        linhaErro: 'Linha Erro',
+        tipoExcessao: 'Tipo Excessao',
+        msgErro: 'Mensagem Erro',
+        stackTrace: 'Stack Trace'
+      }
+      ,
+      sortable: ['idOcorrencia', 'dataOcorrencia'],
+      filterable: ['classeErro', 'linhaErro']
+    }
+  },
+
+  
+  }
+  
+  
+  
+});
+
+
+</script>
+
+
+
+
+
+</html>
