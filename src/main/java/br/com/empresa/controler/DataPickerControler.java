@@ -7,13 +7,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class DataPickerControler {
 
-
 	@RequestMapping("/datapicker")
     public String datapicker() {
         return "datapicker";
     }
-	
-	
 	
 	@RequestMapping("/datapicker/datas")
 	//FORMATO:	20/02/2018
@@ -21,5 +18,4 @@ public class DataPickerControler {
 		System.out.println("--> " + datainicial );System.out.println("--> " + datafinal );
 	    return "index";
     }
-	
 }
