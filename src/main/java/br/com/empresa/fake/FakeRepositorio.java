@@ -9,6 +9,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import br.com.empresa.model.LogErro;
 import br.com.empresa.model.graficos.DataTableBuilder;
@@ -21,10 +22,15 @@ import br.com.empresa.model.graficos.GraficoPizzaBuilder;
 public class FakeRepositorio {
 
 	private static final Logger log = LoggerFactory.getLogger(FakeRepositorio.class);
-//	private RestTemplate restTemplate = new RestTemplate();
-//	Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+	private RestTemplate restTemplate = new RestTemplate();
+	private  final String HTTP_GTURNQUIST_QUOTERS_CFAPPS_IO_API_RANDOM = "http://gturnquist-quoters.cfapps.io/api/random";
+	
+	
 	
 	public String getGraficoTipoErros() {
+		Object forObject = restTemplate.getForObject(HTTP_GTURNQUIST_QUOTERS_CFAPPS_IO_API_RANDOM, Object.class);
+		log.info(forObject
+				.toString());
 		
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
@@ -36,11 +42,12 @@ public class FakeRepositorio {
 		map.put("Legenda4", 10);
 		
 		GraficoPizzaBuilder graficoPizzaBuilder = new GraficoPizzaBuilder(map);
-		log.info(graficoPizzaBuilder.toString());
 		return graficoPizzaBuilder.getGraficoTipoErros();
 	}
 
 	
+
+
 	public String getGraficoClassesComErros() {
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
