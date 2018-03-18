@@ -86,7 +86,7 @@
                             <table id="tabela" class="table table-hover table-bordered" >
                             	<thead>
 									<tr>
-										<th id="idOcorrencia">idOcorrencia</th>
+<!-- 										<th id="idOcorrencia">idOcorrencia</th> -->
 										<th >dataOcorrencia</th>
 										<th >sistema</th>
 										<th >ipserver</th>
@@ -146,26 +146,24 @@ $(document).ready(function(){
 			data : fromServer,
 			columns : [ 
 			          
-			{
-				data : "idOcorrencia"
+			 {
+				data : "date"
 			}, {
-				data : "dataOcorrencia"
+				data : "applicationName"
 			}, {
-				data : "sistema"
+				data : "serverAddress"
 			}, {
-				data : "ipserver"
+				data : "exceptionPackage"
 			}, {
-				data : "pacoteErro"
+				data : "exceptionClass"
 			}, {
-				data : "classeErro"
+				data : "exceptionMethod"
 			}, {
-				data : "metodoErro"
+				data : "exceptionLine"
 			}, {
-				data : "linhaErro"
+				data : "exceptionType"
 			}, {
-				data : "tipoExcessao"
-			}, {
-				data : "msgErro"
+				data : "exceptionMessage"
 			}, {
 				data : "stackTrace"	
 			} ]
