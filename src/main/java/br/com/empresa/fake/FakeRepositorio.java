@@ -1,20 +1,20 @@
 package br.com.empresa.fake;
 
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import br.com.empresa.model.LogErro;
-import br.com.empresa.model.graficos.DataTableBuilder;
 import br.com.empresa.model.graficos.GraficoBarraBuilder;
 import br.com.empresa.model.graficos.GraficoLineBuilder;
 import br.com.empresa.model.graficos.GraficoPizzaBuilder;
@@ -27,6 +27,7 @@ public class FakeRepositorio {
 	private RestTemplate restTemplate = new RestTemplate();
 //	private  final String HTTP_GTURNQUIST_QUOTERS_CFAPPS_IO_API_RANDOM = "http://gturnquist-quoters.cfapps.io/api/random";
 	private  final String LOUIZZZ_AWS_API = "http://54.202.46.151:8080/logAplicacao";
+	private String jsonFromTXT = "";
 	
 	
 	
@@ -78,21 +79,29 @@ public class FakeRepositorio {
 
 
 	public String getCarregamentoInicialTabela() {
-
-//		LogErro forObject = restTemplate.getForObject(LOUIZZZ_AWS_API, LogErro.class);
-		ResponseEntity<Object> forEntity = restTemplate.getForEntity(LOUIZZZ_AWS_API, Object.class);
-		
-		log.info(forEntity.toString());
-		
-
-
-		List<LogErro> erros = new ArrayList<LogErro>();
-		erros.add(new LogErro());
-		
-		DataTableBuilder dataTableBuilder = new DataTableBuilder(erros );
-		return dataTableBuilder.getCarregamentoInicialTabela();
+		carregarJsonDeAquivoTxt();
+		return jsonFromTXT ;
 	}
 	
+
+	
+	
+	private void carregarJsonDeAquivoTxt() {
+		String fileName = "fileTest.txt";
+		jsonFromTXT = "[";
+		
+		try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+
+			stream.forEach(s -> {
+				jsonFromTXT += s;
+			});
+
+			jsonFromTXT += "]";	
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 

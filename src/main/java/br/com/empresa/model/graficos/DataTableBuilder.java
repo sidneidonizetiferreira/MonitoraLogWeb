@@ -16,10 +16,15 @@ public class DataTableBuilder {
 
 	private ObjectMapper mapper = new ObjectMapper();
 	private List<LogErro> erros;
+	private String jsonFromApi;
 	
 	
 	public DataTableBuilder(List<LogErro> erros) {
 		this.erros = erros;
+	}
+	
+	public DataTableBuilder(String jsonFromApi){
+		this.jsonFromApi = jsonFromApi;
 	}
 
 
@@ -50,6 +55,8 @@ public class DataTableBuilder {
 		}
 		return jsonInString;
 	}
+	
+	
 	
 
 

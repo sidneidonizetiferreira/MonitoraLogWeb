@@ -17,6 +17,17 @@
 <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/r-2.2.1/datatables.min.css"/> -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
 
+<style>
+td.details-control {
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqiB-xolQzyhX_kpQRx8YZWFrEKJQGDeCodH4JLTGqbU8RfUvM') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqiB-xolQzyhX_kpQRx8YZWFrEKJQGDeCodH4JLTGqbU8RfUvM') no-repeat center center;
+}
+
+</style>
+
 </head>
 
 
@@ -83,20 +94,19 @@
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Excecoes Registradas no Periodo</h3>
                         </div>
                         <div class="panel-body table-responsive">
-                            <table id="tabela" class="table table-hover table-bordered" >
+                            <table id="tabela" class="display table table-hover table-bordered" >
                             	<thead>
 									<tr>
-<!-- 										<th id="idOcorrencia">idOcorrencia</th> -->
-										<th >dataOcorrencia</th>
-										<th >sistema</th>
-										<th >ipserver</th>
-										<th >pacoteErro</th>
-										<th >classeErro</th>
-										<th >metodoErro</th>
-										<th >linhaErro</th>
-										<th >tipoExcessao</th>
-										<th >msgErro</th>
-										<th >stackTrace</th>
+										<th></th>
+										<th >Data</th>
+										<th >Aplicacao</th>
+										<th >serverAddress</th>
+										<th >Pacote</th>
+										<th >Classe</th>
+										<th >Metodo</th>
+										<th >Linha</th>
+										<th >Tipo Excessao</th>
+										<th >Mensagem Excessao</th>
 									</tr>
 								</thead>
 							</table>	
@@ -127,6 +137,17 @@
 
 <script type="text/javascript">
 
+
+	function format ( d ) {
+	    // `d` is the original data object for the row
+	    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+	        '<tr>'+
+	            '<td>StackTrace:</td>'+
+	            '<td>'+d.stackTrace+'</td>'+
+	        '</tr>'+
+	    '</table>';
+	}
+
 $(document).ready(function(){
 
 	$(".datepicker").datepicker({
@@ -139,13 +160,15 @@ $(document).ready(function(){
 	
 	
 	
-	$.getJSON("/chart/carregamentoInicialTabela", function(fromServer) {
-		 $('#tabela').DataTable({
-// 			select: true,
-			info:     true,
+	 $.getJSON("/chart/carregamentoInicialTabela", function(fromServer) {
+		 var ttt = $('#tabela').DataTable({
 			data : fromServer,
 			columns : [ 
-			          
+			{
+			    className:      "details-control",
+			    data:           null,
+			    defaultContent: ""
+			},        
 			 {
 				data : "date"
 			}, {
@@ -164,15 +187,33 @@ $(document).ready(function(){
 				data : "exceptionType"
 			}, {
 				data : "exceptionMessage"
-			}, {
-				data : "stackTrace"	
+// 			}, {
+// 				data : "stackTrace"	
 			} ]
 	
       				
 		});
-
-
-		
+		 
+			// Add event listener for opening and closing details
+			    $('#tabela tbody').on('click', 'td.details-control', function () {
+			        var tr = $(this).closest('tr');
+			        var row = ttt.row( tr );
+			 
+			        if ( row.child.isShown() ) {
+			            // This row is already open - close it
+			            row.child.hide();
+			            tr.removeClass('shown');
+			        }
+			        else {
+			            // Open this row
+			            row.child( format(row.data()) ).show();
+			            tr.addClass('shown');
+			        }
+			    } );
+			
+		 
+		 
+		 
 
 	}).fail(function() {
 		alert("Error occurred getting data from the server");
