@@ -38,9 +38,9 @@ public class GraficoBarraBuilder {
 		BarDataset barDataSet = new BarDataset();
 		barDataSet.setLabel("Classes Excessoes");
 		barDataSet.setData(valores);
-		barDataSet.addBorderColor(Color.GRAY);
+		barDataSet.addBorderColor(Color.WHITE);
 		barDataSet.setBorderWidth(2);
-		barDataSet.addBackgroundColor(Color.GRAY);
+		barDataSet.addBackgroundColor(Color.BLUE_VIOLET);
 		datasets.add(barDataSet);
 
 		barData.setLabels(labels);

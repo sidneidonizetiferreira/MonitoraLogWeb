@@ -40,7 +40,8 @@ public class GraficoLineBuilder {
 				Integer integer = (Integer) array[i];
 				valoresArray[i] = integer.intValue();
 			}
-			LineDataset lineDataSet = new LineDataset();lineDataSet.setLabel(entry.getKey()).setData(valoresArray).setBorderColor(Color.GRAY);
+			LineDataset lineDataSet = new LineDataset();lineDataSet.setLabel(entry.getKey())
+			.setData(valoresArray).setBorderColor(Color.AQUA_MARINE);
 			lineDatasets.add(lineDataSet);
 		}
 		

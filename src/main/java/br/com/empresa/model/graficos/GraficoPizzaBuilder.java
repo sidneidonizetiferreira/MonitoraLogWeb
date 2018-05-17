@@ -37,7 +37,7 @@ public class GraficoPizzaBuilder {
 		}
 
 		pieData.setLabels(labels);
-		pieDataset.setData(valores).addBackgroundColors(Color.GRAY).setBorderWidth(1);
+		pieDataset.setData(valores).addBackgroundColors(Color.AQUA , Color.BLUE , Color.LIME , Color.VIOLET , Color.ORANGE_RED , Color.YELLOW ).setBorderWidth(1);
 
 		pieData.addDataset(pieDataset);
 		piechart.setData(pieData);
