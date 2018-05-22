@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,12 +26,13 @@ import br.com.empresa.model.graficos.GraficoPizzaBuilder;
 public class FakeRepositorio {
 
 	private static final Logger log = LoggerFactory.getLogger(FakeRepositorio.class);
-	private RestTemplate restTemplate = new RestTemplate();
-//	private  final String HTTP_GTURNQUIST_QUOTERS_CFAPPS_IO_API_RANDOM = "http://gturnquist-quoters.cfapps.io/api/random";
-	private  final String LOUIZZZ_AWS_API = "http://54.202.46.151:8080/logAplicacao";
+	private  final String LISTAR_LOG = "http://54.202.46.151:8080/listarLogAplicacao";
 	private String jsonFromTXT = "";
 	
-	
+	@Bean
+	public RestTemplate restTemplate() {
+	    return new RestTemplate();
+	}
 	
 	public String getGraficoTipoErros() {
 		
@@ -79,8 +82,11 @@ public class FakeRepositorio {
 
 
 	public String getCarregamentoInicialTabela() {
-		carregarJsonDeAquivoTxt();
-		return jsonFromTXT ;
+//		carregarJsonDeAquivoTxt();
+//		return jsonFromTXT ;
+		ResponseEntity<String> response
+		  = restTemplate().getForEntity(LISTAR_LOG , String.class);
+		return response.getBody();		
 	}
 	
 

@@ -16,6 +16,7 @@ public class LogErro implements Serializable{
 	
 
 //	private @Getter @Setter String logAplicacao     ;
+	private @Getter @Setter int id;
 	private @Getter @Setter String applicationName          ;
 	private @Getter @Setter String date   ;
 	private @Getter @Setter String serverAddress         ;

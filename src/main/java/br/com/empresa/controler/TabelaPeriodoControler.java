@@ -21,7 +21,7 @@ public class TabelaPeriodoControler {
     }
 	
 	@RequestMapping(value = "/chart/carregamentoInicialTabela", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<String> carregamentoInicialTabela() {
+	public  ResponseEntity<String> carregamentoInicialTabela() {
 		
 		String registros = fakeRepository.getCarregamentoInicialTabela();
 		if (registros == null)
