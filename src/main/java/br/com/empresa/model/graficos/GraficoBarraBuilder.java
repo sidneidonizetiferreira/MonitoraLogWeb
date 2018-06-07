@@ -40,7 +40,7 @@ public class GraficoBarraBuilder {
 		barDataSet.setData(valores);
 		barDataSet.addBorderColor(Color.WHITE);
 		barDataSet.setBorderWidth(2);
-		barDataSet.addBackgroundColor(Color.BLUE_VIOLET);
+		barDataSet.addBackgroundColor(Color.BLUE);
 		datasets.add(barDataSet);
 
 		barData.setLabels(labels);

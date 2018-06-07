@@ -10,6 +10,25 @@
 <link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css" />
 <link rel="stylesheet" type="text/css" href="../css/local.css" />
 
+
+<!-- datatable -->
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/r-2.2.1/datatables.min.css"/> -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
+
+<style>
+td.details-control {
+     background: url('../images/arrow.png') no-repeat center center;
+     cursor: pointer;
+}
+tr.shown td.details-control {
+     background: url('../images/arrow.png') no-repeat center center; 
+}
+
+/* https://www.iconfinder.com/search/?q=arrow&maximum=64&price=free&category=arrow */
+
+          <span class="glyphicon glyphicon-play"></span>
+</style>
+
 </head>
 
 
@@ -44,16 +63,7 @@
                 </div>
             </div>
             
-            <div class="row">
-            	<div class="col-lg-8">
-            	<div class="alert alert-dismissable alert-warning">
-                        <button data-dismiss="alert" class="close" type="button">&times;</button>
-                        	Novas excecoes push notification message ... 
-                 </div>
-                 </div>
-            </div>
-
-
+           
 
 			<div class="row">
                 <div class="col-md-6">
@@ -83,39 +93,144 @@
             
             
             <div class="row">
-               <div class="col-md-6">
+               <div class="col-md-12">
                		<div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Ocorrencias por Periodo</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas id="errosPeriodoChart" class="chartjs" ></canvas>
+                            <canvas id="errosPeriodoChart" class="chartjs" height="60"></canvas>
                         </div>
                     </div>
                </div>
                
-                <div class="col-md-6">
+               
+            </div>
+            
+            
+            <div class="row">
+               <div class="col-md-12">
                		<div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Ocorrencias por Periodo</h3>
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Excecoes Registradas no Periodo</h3>
                         </div>
-                        <div class="panel-body">
-                            
+                        <div class="panel-body table-responsive">
+                            <table id="tabela" class="display table table-hover table-bordered" >
+                            	<thead>
+									<tr>
+										<th></th>
+										<th >Data</th>
+										<th >Aplicacao</th>
+										<th >serverAddress</th>
+										<th >Pacote</th>
+										<th >Classe</th>
+										<th >Metodo</th>
+										<th >Linha</th>
+										<th >Tipo Excessao</th>
+										<th >Mensagem Excessao</th>
+									</tr>
+								</thead>
+							</table>	
                         </div>
                     </div>
                </div>
-               
             </div>
 
 </div>
 </div>
+
+
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/Chart.js"></script>
 <script type="text/javascript" src="../js/graficos.js"></script>
 
+<!-- datatable -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
 </body>
+
+<script type="text/javascript">
+function format ( d ) {
+	    // `d` is the original data object for the row
+	    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+	        '<tr>'+
+	            '<td>StackTrace:</td>'+
+	            '<td>'+d.stackTrace+'</td>'+
+	        '</tr>'+
+	    '</table>';
+	}
+
+$(document).ready(function(){
+
+	
+	
+	 $.getJSON("/chart/carregamentoInicialTabela", function(fromServer) {
+		 var ttt = $('#tabela').DataTable({
+			data : fromServer,
+			columns : [ 
+			{
+			    className:      "details-control",
+			    data:           null,
+			    defaultContent: ""
+			},        
+			 {
+				data : "date"
+			}, {
+				data : "applicationName"
+			}, {
+				data : "serverAddress"
+			}, {
+				data : "exceptionPackage"
+			}, {
+				data : "exceptionClass"
+			}, {
+				data : "exceptionMethod"
+			}, {
+				data : "exceptionLine"
+			}, {
+				data : "exceptionType"
+			}, {
+				data : "exceptionMessage"
+// 			}, {
+// 				data : "stackTrace"	
+			} ]
+	
+      				
+		});
+		 
+			// Add event listener for opening and closing details
+			    $('#tabela tbody').on('click', 'td.details-control', function () {
+			        var tr = $(this).closest('tr');
+			        var row = ttt.row( tr );
+			 
+			        if ( row.child.isShown() ) {
+			            // This row is already open - close it
+			            row.child.hide();
+			            tr.removeClass('shown');
+			        }
+			        else {
+			            // Open this row
+			            row.child( format(row.data()) ).show();
+			            tr.addClass('shown');
+			        }
+			    } );
+			
+		 
+		 
+		 
+
+	}).fail(function() {
+		alert("Error occurred getting data from the server");
+	});
+	
+	
+	
+});
+</script>
 
 
 </html>

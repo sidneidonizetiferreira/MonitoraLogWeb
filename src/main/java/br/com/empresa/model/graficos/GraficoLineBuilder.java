@@ -41,7 +41,7 @@ public class GraficoLineBuilder {
 				valoresArray[i] = integer.intValue();
 			}
 			LineDataset lineDataSet = new LineDataset();lineDataSet.setLabel(entry.getKey())
-			.setData(valoresArray).setBorderColor(Color.AQUA_MARINE);
+			.setData(valoresArray).setBorderColor(Color.AQUA);
 			lineDatasets.add(lineDataSet);
 		}
 		
