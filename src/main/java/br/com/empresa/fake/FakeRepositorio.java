@@ -108,6 +108,11 @@ public class FakeRepositorio {
 			e.printStackTrace();
 		}
 	}
+
+	public String getCarregamentoTabelaFAKE() {
+		carregarJsonDeAquivoTxt();
+		return jsonFromTXT ;
+	}
 	
 	
 

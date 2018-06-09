@@ -10,9 +10,15 @@
 <link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css" />
 <link rel="stylesheet" type="text/css" href="../css/local.css" />
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+
+<!-- calendar -->
+<link rel="stylesheet" type="text/css" href="../css/datepicker.css" />
+<script type="text/javascript" src="../js/bootstrap-datepicker.js"></script>
+
 
 <!-- datatable -->
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/r-2.2.1/datatables.min.css"/> -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
 
 <style>
@@ -24,9 +30,7 @@ tr.shown td.details-control {
      background: url('../images/arrow.png') no-repeat center center; 
 }
 
-/* https://www.iconfinder.com/search/?q=arrow&maximum=64&price=free&category=arrow */
 
-          <span class="glyphicon glyphicon-play"></span>
 </style>
 
 </head>
@@ -103,10 +107,29 @@ tr.shown td.details-control {
                         </div>
                     </div>
                </div>
-               
-               
             </div>
-            
+
+
+<div class="row">
+		<div class="col-lg-4">
+			<div class="panel panel-primary">
+				<div class="panel-body">
+    				<form action="path/to/server/script" method="post" id="my_form">
+					<div class="input-group input-daterange">
+						<input type="text" class="form-control datepicker"	name="datainicial" />
+						<div class="input-group-addon">to</div>
+						<input type="text" class="form-control datepicker" name="datafinal"	/>
+					</div>
+
+
+					<div class="input-group">
+						<button id="botao" type="submit"  class="btn btn-primary" >Submit</button>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>            
             
             <div class="row">
                <div class="col-md-12">
@@ -143,8 +166,7 @@ tr.shown td.details-control {
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+
 <script type="text/javascript" src="../js/Chart.js"></script>
 <script type="text/javascript" src="../js/graficos.js"></script>
 
@@ -153,7 +175,10 @@ tr.shown td.details-control {
 
 </body>
 
+
 <script type="text/javascript">
+
+
 function format ( d ) {
 	    // `d` is the original data object for the row
 	    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
@@ -162,11 +187,17 @@ function format ( d ) {
 	            '<td>'+d.stackTrace+'</td>'+
 	        '</tr>'+
 	    '</table>';
-	}
+	};
 
 $(document).ready(function(){
 
-	
+	$(".datepicker").datepicker({
+	    language: "pt-BR",
+	    autoclose: true,
+	    format: 'dd/mm/yyyy',
+	    todayHighlight: true,
+	    constrainInput: false 
+	});	
 	
 	 $.getJSON("/chart/carregamentoInicialTabela", function(fromServer) {
 		 var ttt = $('#tabela').DataTable({
@@ -202,24 +233,23 @@ $(document).ready(function(){
       				
 		});
 		 
+
 			// Add event listener for opening and closing details
-			    $('#tabela tbody').on('click', 'td.details-control', function () {
-			        var tr = $(this).closest('tr');
-			        var row = ttt.row( tr );
-			 
-			        if ( row.child.isShown() ) {
-			            // This row is already open - close it
-			            row.child.hide();
-			            tr.removeClass('shown');
-			        }
-			        else {
-			            // Open this row
-			            row.child( format(row.data()) ).show();
-			            tr.addClass('shown');
-			        }
-			    } );
-			
+		    $('#tabela tbody').on('click', 'td.details-control', function () {
+		        var tr = $(this).closest('tr');
+		        var row = ttt.row( tr );
 		 
+		        if ( row.child.isShown() ) {
+		            // This row is already open - close it
+		            row.child.hide();
+		            tr.removeClass('shown');
+		        }
+		        else {
+		            // Open this row
+		            row.child( format(row.data()) ).show();
+		            tr.addClass('shown');
+		        }
+		    } );
 		 
 		 
 
@@ -228,6 +258,55 @@ $(document).ready(function(){
 	});
 	
 	
+	 
+// 	 --------------------------
+	$("#my_form").submit(function(event){
+		
+		event.preventDefault(); //prevent default action 
+	    var form_data = $(this).serialize(); //Encode form elements for submission
+	    
+	    $.getJSON( "/datapicker/datas" , form_data ,  function( fromServer ) {
+			
+	    	 var ttt = $('#tabela').DataTable({
+	 			data : fromServer,
+	 			columns : [ 
+	 			{
+	 			    className:      "details-control",
+	 			    data:           null,
+	 			    defaultContent: ""
+	 			},        
+	 			 {
+	 				data : "date"
+	 			}, {
+	 				data : "applicationName"
+	 			}, {
+	 				data : "serverAddress"
+	 			}, {
+	 				data : "exceptionPackage"
+	 			}, {
+	 				data : "exceptionClass"
+	 			}, {
+	 				data : "exceptionMethod"
+	 			}, {
+	 				data : "exceptionLine"
+	 			}, {
+	 				data : "exceptionType"
+	 			}, {
+	 				data : "exceptionMessage"
+// 	  			}, {
+// 	  				data : "stackTrace"	
+	 			} ]
+	 	
+	       				
+	 		});
+	    	
+	    });
+	    
+	});   
+	
+	
+
+	 
 	
 });
 </script>
