@@ -26,7 +26,7 @@ import br.com.empresa.model.graficos.GraficoPizzaBuilder;
 public class FakeRepositorio {
 
 	private static final Logger log = LoggerFactory.getLogger(FakeRepositorio.class);
-	private  final String LISTAR_LOG = "http://54.202.46.151:8080/listarLogAplicacao";
+	private  final String LISTAR_LOG = "http://54.70.83.42:8080/listarLogAplicacao";
 	private String jsonFromTXT = "";
 	
 	@Bean

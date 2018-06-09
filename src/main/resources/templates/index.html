@@ -189,77 +189,7 @@ function format ( d ) {
 	    '</table>';
 	};
 
-$(document).ready(function(){
-
-	$(".datepicker").datepicker({
-	    language: "pt-BR",
-	    autoclose: true,
-	    format: 'dd/mm/yyyy',
-	    todayHighlight: true,
-	    constrainInput: false 
-	});	
 	
-	 $.getJSON("/chart/carregamentoInicialTabela", function(fromServer) {
-		 var ttt = $('#tabela').DataTable({
-			data : fromServer,
-			columns : [ 
-			{
-			    className:      "details-control",
-			    data:           null,
-			    defaultContent: ""
-			},        
-			 {
-				data : "date"
-			}, {
-				data : "applicationName"
-			}, {
-				data : "serverAddress"
-			}, {
-				data : "exceptionPackage"
-			}, {
-				data : "exceptionClass"
-			}, {
-				data : "exceptionMethod"
-			}, {
-				data : "exceptionLine"
-			}, {
-				data : "exceptionType"
-			}, {
-				data : "exceptionMessage"
-// 			}, {
-// 				data : "stackTrace"	
-			} ]
-	
-      				
-		});
-		 
-
-			// Add event listener for opening and closing details
-		    $('#tabela tbody').on('click', 'td.details-control', function () {
-		        var tr = $(this).closest('tr');
-		        var row = ttt.row( tr );
-		 
-		        if ( row.child.isShown() ) {
-		            // This row is already open - close it
-		            row.child.hide();
-		            tr.removeClass('shown');
-		        }
-		        else {
-		            // Open this row
-		            row.child( format(row.data()) ).show();
-		            tr.addClass('shown');
-		        }
-		    } );
-		 
-		 
-
-	}).fail(function() {
-		alert("Error occurred getting data from the server");
-	});
-	
-	
-	 
-// 	 --------------------------
 	$("#my_form").submit(function(event){
 		
 		event.preventDefault(); //prevent default action 
@@ -267,7 +197,7 @@ $(document).ready(function(){
 	    
 	    $.getJSON( "/datapicker/datas" , form_data ,  function( fromServer ) {
 			
-	    	 var ttt = $('#tabela').DataTable({
+	    	 $('#tabela').DataTable({
 	 			data : fromServer,
 	 			columns : [ 
 	 			{
@@ -293,8 +223,6 @@ $(document).ready(function(){
 	 				data : "exceptionType"
 	 			}, {
 	 				data : "exceptionMessage"
-// 	  			}, {
-// 	  				data : "stackTrace"	
 	 			} ]
 	 	
 	       				
@@ -304,11 +232,35 @@ $(document).ready(function(){
 	    
 	});   
 	
+
+	$(".datepicker").datepicker({
+	    language: "pt-BR",
+	    autoclose: true,
+	    format: 'dd/mm/yyyy',
+	    todayHighlight: true,
+	    constrainInput: false 
+	});	
 	
 
-	 
+
+			// Add event listener for opening and closing details
+		    $('#tabela tbody').on('click', 'td.details-control', function () {
+		        var tr = $(this).closest('tr');
+		        var row = ttt.row( tr );
+		 
+		        if ( row.child.isShown() ) {
+		            // This row is already open - close it
+		            row.child.hide();
+		            tr.removeClass('shown');
+		        }
+		        else {
+		            // Open this row
+		            row.child( format(row.data()) ).show();
+		            tr.addClass('shown');
+		        }
+		    } );
 	
-});
+
 </script>
 
 
