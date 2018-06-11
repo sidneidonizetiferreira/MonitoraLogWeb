@@ -72,10 +72,10 @@ public String getGraficoClassesComErros() {
 	
 public String getTotalErrosPorPeriodo() {
 	
-	List<String> periodos = Arrays.asList("03/03","04/03","05/03","06/03");
+	List<String> periodos = Arrays.asList("03/03","04/03","05/03","06/03","07/03","08/03");
 	Map<String, List<Integer>> lines = new HashMap<>();
 	
-	lines.put("Line1", Arrays.asList(2,4,6,8));
+	lines.put("Line1", Arrays.asList(2,4,6,8 ,7,1));
 //	lines.put("Line2", Arrays.asList(3,2,2,4));
 //	lines.put("Line3", Arrays.asList(1,6,3,6));
 	
