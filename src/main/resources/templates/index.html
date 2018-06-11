@@ -70,198 +70,109 @@ tr.shown td.details-control {
            
 
 			<div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Erros mais Recorentes</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas id="exceptionChart" class="chartjs"> </canvas>
+                            <canvas id="exceptionChart" class="chartjs" > </canvas>
                         </div>
                     </div>
                 </div>
                
-                <div class="col-md-6">
+                <div class="col-md-4">
 					<div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Classes com mais Ocorrencias</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas id="classesChart" class="chartjs" ></canvas>
+                            <canvas id="classesChart" class="chartjs"></canvas>
                         </div>
                     </div>
                 </div>
                 
-               
-            </div>
-            
-            
-            <div class="row">
-               <div class="col-md-12">
+    
+               <div class="col-md-4">
                		<div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Ocorrencias por Periodo</h3>
                         </div>
                         <div class="panel-body">
-                            <canvas id="errosPeriodoChart" class="chartjs" height="60"></canvas>
+                            <canvas id="errosPeriodoChart" class="chartjs"></canvas>
                         </div>
                     </div>
                </div>
             </div>
 
 
-<div class="row">
-		<div class="col-lg-4">
-			<div class="panel panel-primary">
-				<div class="panel-body">
-    				<form action="path/to/server/script" method="post" id="my_form">
-					<div class="input-group input-daterange">
-						<input type="text" class="form-control datepicker"	name="datainicial" />
-						<div class="input-group-addon">to</div>
-						<input type="text" class="form-control datepicker" name="datafinal"	/>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="panel panel-primary">
+					
+					<div class="panel-heading">
+								<h3 class="panel-title">
+									<i class="fa fa-bar-chart-o"></i> Excecoes Registradas no
+									Periodo
+								</h3>
 					</div>
+						
+						<div class="panel-body">
+						<form action="path/to/server/script" method="post" id="my_form" class="form-inline">
+							<div class="form-group">
+							<input type="text" class="form-control datepicker datepicker-inline"	name="datainicial" autocomplete="off" /> 
+							<input type="text" class="form-control datepicker datepicker-inline"	name="datafinal" autocomplete="off" />
+							<button id="botao" type="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</form>
+						</div>
 
-
-					<div class="input-group">
-						<button id="botao" type="submit"  class="btn btn-primary" >Submit</button>
 					</div>
-					</form>
 				</div>
-			</div>
+			
+			
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+					
+							<div class="panel-body table-responsive">
+
+								<table id="tabela"
+									class="display table table-hover table-bordered">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Data</th>
+											<th>Aplicacao</th>
+											<th>serverAddress</th>
+											<th>Pacote</th>
+											<th>Classe</th>
+											<th>Metodo</th>
+											<th>Linha</th>
+											<th>Tipo Excessao</th>
+											<th>Mensagem Excessao</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
 		</div>
-	</div>            
-            
-            <div class="row">
-               <div class="col-md-12">
-               		<div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Excecoes Registradas no Periodo</h3>
-                        </div>
-                        <div class="panel-body table-responsive">
-                            <table id="tabela" class="display table table-hover table-bordered" >
-                            	<thead>
-									<tr>
-										<th></th>
-										<th >Data</th>
-										<th >Aplicacao</th>
-										<th >serverAddress</th>
-										<th >Pacote</th>
-										<th >Classe</th>
-										<th >Metodo</th>
-										<th >Linha</th>
-										<th >Tipo Excessao</th>
-										<th >Mensagem Excessao</th>
-									</tr>
-								</thead>
-							</table>	
-                        </div>
-                    </div>
-               </div>
-            </div>
-
-</div>
-</div>
 
 
 
 
-
-
-<script type="text/javascript" src="../js/Chart.js"></script>
-<script type="text/javascript" src="../js/graficos.js"></script>
 
 <!-- datatable -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
+<script type="text/javascript" src="../js/Chart.js"></script>
+<script type="text/javascript" src="../js/graficos.js"></script>
+
+
 </body>
 
-
-<script type="text/javascript">
-
-
-function format ( d ) {
-	    // `d` is the original data object for the row
-	    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-	        '<tr>'+
-	            '<td>StackTrace:</td>'+
-	            '<td>'+d.stackTrace+'</td>'+
-	        '</tr>'+
-	    '</table>';
-	};
-
-	
-	$("#my_form").submit(function(event){
-		
-		event.preventDefault(); //prevent default action 
-	    var form_data = $(this).serialize(); //Encode form elements for submission
-	    
-	    $.getJSON( "/datapicker/datas" , form_data ,  function( fromServer ) {
-			
-	    	 $('#tabela').DataTable({
-	 			data : fromServer,
-	 			columns : [ 
-	 			{
-	 			    className:      "details-control",
-	 			    data:           null,
-	 			    defaultContent: ""
-	 			},        
-	 			 {
-	 				data : "date"
-	 			}, {
-	 				data : "applicationName"
-	 			}, {
-	 				data : "serverAddress"
-	 			}, {
-	 				data : "exceptionPackage"
-	 			}, {
-	 				data : "exceptionClass"
-	 			}, {
-	 				data : "exceptionMethod"
-	 			}, {
-	 				data : "exceptionLine"
-	 			}, {
-	 				data : "exceptionType"
-	 			}, {
-	 				data : "exceptionMessage"
-	 			} ]
-	 	
-	       				
-	 		});
-	    	
-	    });
-	    
-	});   
-	
-
-	$(".datepicker").datepicker({
-	    language: "pt-BR",
-	    autoclose: true,
-	    format: 'dd/mm/yyyy',
-	    todayHighlight: true,
-	    constrainInput: false 
-	});	
-	
-
-
-			// Add event listener for opening and closing details
-		    $('#tabela tbody').on('click', 'td.details-control', function () {
-		        var tr = $(this).closest('tr');
-		        var row = ttt.row( tr );
-		 
-		        if ( row.child.isShown() ) {
-		            // This row is already open - close it
-		            row.child.hide();
-		            tr.removeClass('shown');
-		        }
-		        else {
-		            // Open this row
-		            row.child( format(row.data()) ).show();
-		            tr.addClass('shown');
-		        }
-		    } );
-	
-
-</script>
 
 
 </html>

@@ -1,14 +1,19 @@
 package br.com.empresa.model.graficos;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import be.ceau.chart.BarChart;
 import be.ceau.chart.color.Color;
 import be.ceau.chart.data.BarData;
-import be.ceau.chart.dataset.BarDataset;
+import be.ceau.chart.dataset.BarDataset;;
 
 public class GraficoBarraBuilder {
 	
@@ -16,9 +21,16 @@ public class GraficoBarraBuilder {
 	private BarData barData = new BarData();
 	private BarChart barChart = new BarChart();
 	private Map<String,Integer> map;
+	private ObjectMapper mapper = new ObjectMapper();
 	
-	public GraficoBarraBuilder(Map<String, Integer> map) {
-		this.map = map;
+	
+	public GraficoBarraBuilder(final String json) {
+		TypeReference<HashMap<String, Integer>> typeRef   = new TypeReference<HashMap<String, Integer>>() {};
+		try {
+			this.map = mapper.readValue(json, typeRef);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getGraficoBarras() {

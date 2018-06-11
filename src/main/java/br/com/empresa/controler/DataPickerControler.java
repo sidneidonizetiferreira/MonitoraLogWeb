@@ -25,7 +25,7 @@ public class DataPickerControler {
     public ResponseEntity<String>  datapickerDatas(@RequestParam("datainicial") String datainicial, @RequestParam("datafinal") String datafinal) {
 		System.out.println("--> " + datainicial );System.out.println("--> " + datafinal );
 	    
-		String registros = fakeRepository.getCarregamentoInicialTabela();
+		String registros = fakeRepository.getTabelaPorPeriodo(datainicial , datafinal);
 		if (registros == null)
 			return new ResponseEntity<String>(registros, HttpStatus.NOT_FOUND);
 

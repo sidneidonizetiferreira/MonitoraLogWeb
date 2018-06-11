@@ -21,15 +21,7 @@ public class IndexControler {
 		return "index";
 	}
 	
-	@RequestMapping("/vue")
-	public String vue() {
-		return "tutorialVue";
-	}
 	
-	@RequestMapping("/vueJson")
-	public String vue2() {
-		return "tutorialVueJson";
-	}
 
 	@RequestMapping(value = "/chart/carregamentoInicialException", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<String> carregamentoInicialException() {
