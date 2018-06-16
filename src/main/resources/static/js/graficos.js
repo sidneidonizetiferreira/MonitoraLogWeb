@@ -35,85 +35,141 @@ function format ( d ) {
 
 
 
-$("#my_form").submit(function(event){
-	
-	event.preventDefault(); //prevent default action 
-    var form_data = $(this).serialize(); //Encode form elements for submission
-    
-    
-    
-    
-    $.getJSON( "/datapicker/datas" , form_data ,  function( fromServer ) {
-    	
-    	
-    	if ( $.fn.dataTable.isDataTable( '#tabela' ) ) {
-    		oTable = $('#tabela').DataTable();
-    	}
-    	else {
-    		oTable =  $('#tabela').DataTable({
-        		data : fromServer,
-        		columns : [ 
-        		{
-        		    className:      "details-control",
-        		    data:           null,
-        		    defaultContent: ""
-        		},        
-        		 {
-        			data : "date"
-        		}, {
-        			data : "applicationName"
-        		}, {
-        			data : "serverAddress"
-        		}, {
-        			data : "exceptionPackage"
-        		}, {
-        			data : "exceptionClass"
-        		}, {
-        			data : "exceptionMethod"
-        		}, {
-        			data : "exceptionLine"
-        		}, {
-        			data : "exceptionType"
-        		}, {
-        			data : "exceptionMessage"
-        		} ]
+	$("#my_form").submit(function(event){
+		
+		event.preventDefault(); //prevent default action 
+	    var form_data = $(this).serialize(); //Encode form elements for submission
+	    
+	    
+	    $.getJSON( "/datapicker/datas" , form_data ,  function( fromServer ) {
+	    	
+	    	
+	    	if ( $.fn.dataTable.isDataTable( '#tabela' ) ) {
+	    		console.log('true ');
+	    		oTable.clear();
+	    		oTable.destroy();
+	        	
+	    		oTable =  $('#tabela').DataTable({
+	        		data : fromServer,
+	        		columns : [ 
+	        		{
+	        		    className:      "details-control",
+	        		    data:           null,
+	        		    defaultContent: ""
+	        		},        
+	        		 {
+	        			data : "date"
+	        		}, {
+	        			data : "applicationName"
+	        		}, {
+	        			data : "serverAddress"
+	        		}, {
+	        			data : "exceptionPackage"
+	        		}, {
+	        			data : "exceptionClass"
+	        		}, {
+	        			data : "exceptionMethod"
+	        		}, {
+	        			data : "exceptionLine"
+	        		}, {
+	        			data : "exceptionType"
+	        		}, {
+	        			data : "exceptionMessage"
+	        		} ]
 
-        				
-        	});
-        	 
-        	// Add event listener for opening and closing details
-     	    $('#tabela tbody').on('click', 'td.details-control', function () {
+	        				
+	        	});
+	    		
+	    
+	    	
+	    	}
+	    	else {
+	    		console.log('false');
+	    		oTable =  $('#tabela').DataTable({
+	        		data : fromServer,
+	        		columns : [ 
+	        		{
+	        		    className:      "details-control",
+	        		    data:           null,
+	        		    defaultContent: ""
+	        		},        
+	        		 {
+	        			data : "date"
+	        		}, {
+	        			data : "applicationName"
+	        		}, {
+	        			data : "serverAddress"
+	        		}, {
+	        			data : "exceptionPackage"
+	        		}, {
+	        			data : "exceptionClass"
+	        		}, {
+	        			data : "exceptionMethod"
+	        		}, {
+	        			data : "exceptionLine"
+	        		}, {
+	        			data : "exceptionType"
+	        		}, {
+	        			data : "exceptionMessage"
+	        		} ]
 
-     	        var tr = $(this).closest('tr');
-     	        var row = oTable.row( tr );
-     	        
-     	 
-     	        if ( row.child.isShown() ) {
-     	            // This row is already open - close it
-     	            row.child.hide();
-     	            tr.removeClass('shown');
-     	        }
-     	        else {
-     	            // Open this row
-     	            row.child( format(row.data()) ).show();
-     	            tr.addClass('shown');
-     	        }
-     	    } );
-     	    
-        	}//FECHA IF INIT
-     	    
-        	
-        });
-        
-    	
-        
-    });   
+	        				
+	        	});
+	        	 
+	        	// Add event listener for opening and closing details
+	     	    $('#tabela tbody').on('click', 'td.details-control', function () {
+
+	     	        var tr = $(this).closest('tr');
+	     	        var row = oTable.row( tr );
+	     	        
+	     	 
+	     	        if ( row.child.isShown() ) {
+	     	            // This row is already open - close it
+	     	            row.child.hide();
+	     	            tr.removeClass('shown');
+	     	        }
+	     	        else {
+	     	            // Open this row
+	     	            row.child( format(row.data()) ).show();
+	     	            tr.addClass('shown');
+	     	        }
+	     	    } );
+	     	    
+	        	}//FECHA IF INIT
+	     	    
+	        	
+	        });
+	    
+	    
+	   
+
+		  $.getJSON("chart/consultarErrosRecorrentesPeriodo", form_data ,  function(results) {
+			var ctx = document.getElementById("exceptionChart").getContext("2d");
+			var myChart = new Chart(ctx, results);
+		  });
+		  
+		  
+//		$.getJSON("chart/consultarClassesRecorrentesPeriodo",form_data , function(results) {
+//			var ctx = document.getElementById("classesChart").getContext("2d");
+//			var myChart = new Chart(ctx, results);
+//			
+//		});
+	//	
+//		$.getJSON("chart/consultarTotalErrosPeriodo",form_data , function(results) {
+//			var ctx = document.getElementById("errosPeriodoChart").getContext("2d");
+//			var myChart = new Chart(ctx, results);
+//			
+//		});
+	        
+	    	
+	        
+	    });   
 
 
-    $(".datepicker").datepicker({
-        language: "pt-BR",
-        autoclose: true,
-        format: 'dd/mm/yyyy',
-        todayHighlight: true,
-        constrainInput: false 
-    });	
+	    $(".datepicker").datepicker({
+	        language: "pt-BR",
+	        autoclose: true,
+	        format: 'yyyy-mm-dd',
+	        todayHighlight: true,
+	        constrainInput: false 
+	    });	
