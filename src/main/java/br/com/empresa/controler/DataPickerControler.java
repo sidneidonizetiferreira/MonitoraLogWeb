@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.empresa.fake.FakeRepositorio;
+import br.com.empresa.model.graficos.GeradorComponentes;
 
 @Controller
 public class DataPickerControler {
 
 	@Autowired
-	private FakeRepositorio fakeRepository;
+	private GeradorComponentes geradorComponentes;
 
 	@RequestMapping("/datapicker")
     public String datapicker() {
@@ -21,14 +22,43 @@ public class DataPickerControler {
     }
 	
 	@RequestMapping("/datapicker/datas")
-	//FORMATO:	20/02/2018
     public ResponseEntity<String>  datapickerDatas(@RequestParam("datainicial") String datainicial, @RequestParam("datafinal") String datafinal) {
-		System.out.println("--> " + datainicial );System.out.println("--> " + datafinal );
 	    
-		String registros = fakeRepository.getTabelaPorPeriodo(datainicial , datafinal);
+		String registros = geradorComponentes.getTabelaPorPeriodo(datainicial , datafinal);
 		if (registros == null)
 			return new ResponseEntity<String>(registros, HttpStatus.NOT_FOUND);
 
 		return new ResponseEntity<String>(registros, HttpStatus.OK);
     }
+	
+	@RequestMapping("/chart/consultarErrosRecorrentesPeriodo")
+    public ResponseEntity<String>  consultarErrosRecorrentesPeriodo(@RequestParam("datainicial") String datainicial, @RequestParam("datafinal") String datafinal) {
+	    
+		String registros = geradorComponentes.getGraficoTipoErros(datainicial , datafinal);
+		if (registros == null)
+			return new ResponseEntity<String>(registros, HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<String>(registros, HttpStatus.OK);
+    }
+	
+	@RequestMapping("/chart/consultarClassesRecorrentesPeriodo")
+    public ResponseEntity<String>  consultarClassesRecorrentesPeriodo(@RequestParam("datainicial") String datainicial, @RequestParam("datafinal") String datafinal) {
+	    
+		String registros = geradorComponentes.getGraficoClassesComErros(datainicial , datafinal);
+		if (registros == null)
+			return new ResponseEntity<String>(registros, HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<String>(registros, HttpStatus.OK);
+    }
+	
+	@RequestMapping("/chart/consultarTotalErrosPeriodo")
+    public ResponseEntity<String>  consultarTotalErrosPeriodo(@RequestParam("datainicial") String datainicial, @RequestParam("datafinal") String datafinal) {
+	    
+		String registros = geradorComponentes.getTotalErrosPorPeriodo(datainicial , datafinal);
+		if (registros == null)
+			return new ResponseEntity<String>(registros, HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<String>(registros, HttpStatus.OK);
+    }
+	
 }

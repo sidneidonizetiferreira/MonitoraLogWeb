@@ -45,7 +45,6 @@ function format ( d ) {
 	    	
 	    	
 	    	if ( $.fn.dataTable.isDataTable( '#tabela' ) ) {
-	    		console.log('true ');
 	    		oTable.clear();
 	    		oTable.destroy();
 	        	
@@ -84,7 +83,6 @@ function format ( d ) {
 	    	
 	    	}
 	    	else {
-	    		console.log('false');
 	    		oTable =  $('#tabela').DataTable({
 	        		data : fromServer,
 	        		columns : [ 
@@ -138,6 +136,14 @@ function format ( d ) {
 	        	}//FECHA IF INIT
 	     	    
 	        	
+	        }).done(function() {
+	            console.log( "second success" );
+	        })
+	        .fail(function() {
+	          console.log( "error" );
+	        })
+	        .always(function() {
+	          console.log( "complete" );
 	        });
 	    
 	    
@@ -149,17 +155,17 @@ function format ( d ) {
 		  });
 		  
 		  
-//		$.getJSON("chart/consultarClassesRecorrentesPeriodo",form_data , function(results) {
-//			var ctx = document.getElementById("classesChart").getContext("2d");
-//			var myChart = new Chart(ctx, results);
-//			
-//		});
-	//	
-//		$.getJSON("chart/consultarTotalErrosPeriodo",form_data , function(results) {
-//			var ctx = document.getElementById("errosPeriodoChart").getContext("2d");
-//			var myChart = new Chart(ctx, results);
-//			
-//		});
+		$.getJSON("chart/consultarClassesRecorrentesPeriodo",form_data , function(results) {
+			var ctx = document.getElementById("classesChart").getContext("2d");
+			var myChart = new Chart(ctx, results);
+			
+		});
+		
+		$.getJSON("chart/consultarTotalErrosPeriodo",form_data , function(results) {
+			var ctx = document.getElementById("errosPeriodoChart").getContext("2d");
+			var myChart = new Chart(ctx, results);
+			
+		});
 	        
 	    	
 	        

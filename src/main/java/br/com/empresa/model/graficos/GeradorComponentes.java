@@ -25,7 +25,7 @@ public class GeradorComponentes {
 	private final String URL_JSON_DATATABLE_POR_DATA = "http://54.70.83.42:8080//consultarLogByData";
 	private final String URL_JSON_TIPOS_ERROS = "http://54.70.83.42:8080//consultarErrosRecorrentesPeriodo";
 	private final String URL_JSON_CLASSES_ERROS = "http://54.70.83.42:8080//consultarClassesRecorrentesPeriodo";
-	private final String URL_JSON_ERROS_PERIODOS = "";
+	private final String URL_JSON_ERROS_PERIODOS = "http://54.70.83.42:8080//consultarTotalErrosPeriodo";
 
 	@Bean
 	public RestTemplate restTemplate() {
@@ -35,60 +35,33 @@ public class GeradorComponentes {
 	
 	// http://localhost:8080/consultarErrosRecorrentesPeriodo?appName=AP000100&startDate=2017-11-28&endDate=2017-11-30&limit=5
 	public String getGraficoTipoErros(String dataInicio, String dataFinal) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-		map.add("AP000100", "AP000100");
-		map.add("limit", "5");
-		map.add("startDate", dataInicio);
-		map.add("endDate", dataFinal);
-
-		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-
-		ResponseEntity<String> response = restTemplate().postForEntity(URL_JSON_TIPOS_ERROS, request, String.class);
-
-		GraficoPizzaBuilder graficoPizzaBuilder = new GraficoPizzaBuilder(response.getBody());
+		ResponseEntity<String> response  = restTemplate().getForEntity( URL_JSON_TIPOS_ERROS + "?appName=AP000100&startDate="+dataInicio +"&endDate=" + dataFinal +"&limit=5", String.class);
+		String json = response.getBody();
+		
+		GraficoPizzaBuilder graficoPizzaBuilder = new GraficoPizzaBuilder(json);
 		return graficoPizzaBuilder.getGraficoTipoErros();
 	}
 
 	
 	// http://localhost:8080/consultarClassesRecorrentesPeriodo?appName=AP000100&startDate=2017-11-28&endDate=2017-11-30&limit=5
 	public String getGraficoClassesComErros(String dataInicio, String dataFinal) {
+		ResponseEntity<String> response = restTemplate().getForEntity(URL_JSON_CLASSES_ERROS
+				+ "?appName=AP000100&startDate=" + dataInicio + "&endDate=" + dataFinal + "&limit=5", String.class);
+		String json = response.getBody();
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-		map.add("AP000100", "AP000100");
-		map.add("limit", "5");
-		map.add("startDate", dataInicio);
-		map.add("endDate", dataFinal);
-
-		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-
-		ResponseEntity<String> response = restTemplate().postForEntity(URL_JSON_CLASSES_ERROS, request, String.class);
-
-		GraficoBarraBuilder graficoBarraBuilder = new GraficoBarraBuilder(response.getBody());
+		GraficoBarraBuilder graficoBarraBuilder = new GraficoBarraBuilder(json);
 		return graficoBarraBuilder.getGraficoBarras();
 	}
 
 	
-	// http://localhost:8080/consultarClassesRecorrentesPeriodo?appName=AP000100&startDate=2017-11-28&endDate=2017-11-30&limit=5
+	// http://localhost:8080/consultarTotalErrosPeriodo?appName=AP000100&startDate=2017-11-28&endDate=2017-11-30
 	public String getTotalErrosPorPeriodo(String dataInicio, String dataFinal) {
 		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-		map.add("AP000100", "AP000100");
-		map.add("limit", "5");
-		map.add("startDate", dataInicio);
-		map.add("endDate", dataFinal);
-
-		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-		ResponseEntity<String> response = restTemplate().postForEntity(URL_JSON_ERROS_PERIODOS, request, String.class);
+//		ResponseEntity<String> response = restTemplate().getForEntity(URL_JSON_ERROS_PERIODOS
+//				+ "?appName=AP000100&startDate=" + dataInicio + "&endDate=" + dataFinal, String.class);
+//		String json = response.getBody();
 		
+//		System.out.println(json);//esta devolvendo 404
 		
 		List<String> periodos = Arrays.asList("03/03", "04/03", "05/03", "06/03", "07/03", "08/03");
 		Map<String, List<Integer>> lines = new HashMap<>();
@@ -96,6 +69,13 @@ public class GeradorComponentes {
 
 		GraficoLineBuilder graficoLineBuilder = new GraficoLineBuilder(periodos, lines);
 		return graficoLineBuilder.getTotalErrosPorPeriodo();
+	}
+	
+	
+	public String getTabelaPorPeriodo(String dataInicio , String dataFinal) {
+		ResponseEntity<String> response
+		  = restTemplate().getForEntity(URL_JSON_DATATABLE_POR_DATA , String.class , dataInicio , dataFinal) ;
+		return response.getBody();
 	}
 
 }
