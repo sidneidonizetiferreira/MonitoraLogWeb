@@ -1,4 +1,4 @@
-
+var oTable ;
 
 
 $.getJSON("chart/carregamentoInicialException", function(results) {
@@ -19,6 +19,113 @@ $.getJSON("chart/carregamentoInicialPorPeriodo", function(results) {
 	
 });
 
+
+$.getJSON( "/chart/carregamentoInicialListagemExceptions" , function( results ) {
+	
+	if ( $.fn.dataTable.isDataTable( '#tabela' ) ) {
+		oTable.clear();
+		oTable.destroy();
+    	
+		oTable =  $('#tabela').DataTable({
+    		data : results,
+    		columns : [ 
+    		{
+    		    className:      "details-control",
+    		    data:           null,
+    		    defaultContent: ""
+    		},        
+    		 {
+    			data : "date"
+    		}, {
+    			data : "applicationName"
+    		}, {
+    			data : "serverAddress"
+    		}, {
+    			data : "exceptionPackage"
+    		}, {
+    			data : "exceptionClass"
+    		}, {
+    			data : "exceptionMethod"
+    		}, {
+    			data : "exceptionLine"
+    		}, {
+    			data : "exceptionType"
+    		}, {
+    			data : "exceptionMessage"
+    		} ]
+
+    				
+    	});
+		
+
+	
+	}
+	else {
+		oTable =  $('#tabela').DataTable({
+    		data : results,
+    		columns : [ 
+    		{
+    		    className:      "details-control",
+    		    data:           null,
+    		    defaultContent: ""
+    		},        
+    		 {
+    			data : "date"
+    		}, {
+    			data : "applicationName"
+    		}, {
+    			data : "serverAddress"
+    		}, {
+    			data : "exceptionPackage"
+    		}, {
+    			data : "exceptionClass"
+    		}, {
+    			data : "exceptionMethod"
+    		}, {
+    			data : "exceptionLine"
+    		}, {
+    			data : "exceptionType"
+    		}, {
+    			data : "exceptionMessage"
+    		} ]
+
+    				
+    	});
+    	 
+    	// Add event listener for opening and closing details
+ 	    $('#tabela tbody').on('click', 'td.details-control', function () {
+
+ 	        var tr = $(this).closest('tr');
+ 	        var row = oTable.row( tr );
+ 	        
+ 	 
+ 	        if ( row.child.isShown() ) {
+ 	            // This row is already open - close it
+ 	            row.child.hide();
+ 	            tr.removeClass('shown');
+ 	        }
+ 	        else {
+ 	            // Open this row
+ 	            row.child( format(row.data()) ).show();
+ 	            tr.addClass('shown');
+ 	        }
+ 	    } );
+ 	    
+    	}//FECHA IF INIT
+ 	    
+    	
+    }).done(function() {
+        console.log( "second success" );
+    })
+    .fail(function() {
+      console.log( "error" );
+    })
+    .always(function() {
+      console.log( "complete" );
+    });
+
+
+
 function format ( d ) {
     // `d` is the original data object for the row
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
@@ -31,7 +138,6 @@ function format ( d ) {
 
 
 
-	var oTable ;
 
 
 
