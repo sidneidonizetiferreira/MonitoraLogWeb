@@ -44,7 +44,7 @@ public class GeradorComponentes {
 	public String getTotalErrosPorPeriodo(String dataInicio, String dataFinal) {
 		List<String> periodos = Arrays.asList("03/03", "04/03", "05/03", "06/03", "07/03", "08/03");
 		Map<String, List<Integer>> lines = new HashMap<>();
-		lines.put("AP000100", Arrays.asList(2, 4, 6, 8, 7, 1));
+		lines.put("AP000100", Arrays.asList(2, 9, 3, 15, 7, 1));
 
 		GraficoLineBuilder graficoLineBuilder = new GraficoLineBuilder(periodos, lines);
 		return graficoLineBuilder.getTotalErrosPorPeriodo();

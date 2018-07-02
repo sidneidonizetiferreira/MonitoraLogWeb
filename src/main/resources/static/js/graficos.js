@@ -27,7 +27,7 @@ $.getJSON( "/chart/carregamentoInicialListagemExceptions" , function( results ) 
 		oTable.destroy();
     	
 		oTable =  $('#tabela').DataTable({
-    		data : results,
+			data : results,
     		columns : [ 
     		{
     		    className:      "details-control",
@@ -190,7 +190,7 @@ function format ( d ) {
 	    	}
 	    	else {
 	    		oTable =  $('#tabela').DataTable({
-	        		data : fromServer,
+	    			data : fromServer,
 	        		columns : [ 
 	        		{
 	        		    className:      "details-control",
@@ -258,6 +258,7 @@ function format ( d ) {
 		  $.getJSON("chart/consultarErrosRecorrentesPeriodo", form_data ,  function(results) {
 			var ctx = document.getElementById("exceptionChart").getContext("2d");
 			var myChart = new Chart(ctx, results);
+			
 		  });
 		  
 		  
